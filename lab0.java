@@ -42,12 +42,12 @@ public class lab0 {
 		// compute 58
 		String secret = base58(base10(doubleeighty));
 		System.out.println("Your Bit/Vertcoin private key is: " + secret);
-		
+
 		// optional
 		System.out.println("Output to textfile? (Y/n): ");
 		Scanner sc = new Scanner(System.in);
 		String reply = sc.nextLine().toUpperCase();
-		if(reply.equals("Y")) {
+		if (reply.equals("Y")) {
 			try {
 				PrintStream out = new PrintStream(new FileOutputStream("secret.txt"));
 				System.setOut(out);
@@ -78,16 +78,18 @@ public class lab0 {
 		}
 		return data;
 	}
-	
+
 	public static String base58(BigInteger bi) {
 		List<BigInteger> list = new ArrayList<BigInteger>();
-		while(!bi.equals(BigInteger.ZERO)) {
+		while (!bi.equals(BigInteger.ZERO)) {
 			list.add(bi.mod(BigInteger.valueOf(58)));
 			bi = bi.divide(BigInteger.valueOf(58));
 		}
-		String[] alphabet = {"1","2","3","4","5","6","7","8","9","A","B","C","D","E","F","G","H","J","K","L","M","N","P","Q","R","S","T","U","V","W","X","Y","Z","a","b","c","d","e","f","g","h","i","j","k","m","n","o","p","q","r","s","t","u","v","w","x","y","z"};
+		String[] alphabet = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F", "G", "H", "J",
+				"K", "L", "M", "N", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "a", "b", "c", "d", "e", "f",
+				"g", "h", "i", "j", "k", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z" };
 		String result = "";
-		for(int i = list.size()-1;i>=0;i--) {
+		for (int i = list.size() - 1; i >= 0; i--) {
 			result += alphabet[(int) list.get(i).longValue()];
 		}
 		return result;
@@ -129,7 +131,7 @@ public class lab0 {
 					total = (total.pow(count).multiply(BigInteger.valueOf(15)));
 					bi = bi.add(total);
 					break;
-				}			
+				}
 			}
 			count++;
 		}
