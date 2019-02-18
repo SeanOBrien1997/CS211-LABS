@@ -8,26 +8,28 @@ public class lab1 {
 		Scanner sc = new Scanner(System.in);
 		String s = sc.nextLine();
 		String printBin = "";
-		for(int i = 0;i<s.length();i++){
+		for (int i = 0; i < s.length(); i++) {
 			String current = "";
 			current += s.charAt(i);
-			String binary = Integer.toBinaryString((int)current.charAt(0));
+			String binary = Integer.toBinaryString((int) current.charAt(0));
 			printBin += pad(binary) + " ";
-			if(letterMap.containsKey(binary)){
+			if (letterMap.containsKey(binary)) {
 				letterMap.get(binary).increase();
 			} else {
 				letterMap.put(binary, new Counter());
-				 }
+			}
 		}
 		System.out.println(printBin.trim());
-		letterMap.forEach((key,value) -> 
-		System.out.println(value.get()==1?("'" + (char)Integer.parseInt(key, 2) + "'" + " appeared " + value.get() + " time") : "'" + (char)Integer.parseInt(key, 2) + "'" + " appeared " + value.get() + " times"));
+		letterMap.forEach((key,
+				value) -> System.out.println(value.get() == 1
+						? ("'" + (char) Integer.parseInt(key, 2) + "'" + " appeared " + value.get() + " time")
+						: "'" + (char) Integer.parseInt(key, 2) + "'" + " appeared " + value.get() + " times"));
 	}
-	
-	public static String pad(String s){
-		int padding = 8-s.length();
+
+	public static String pad(String s) {
+		int padding = 8 - s.length();
 		String result = "";
-		for(int i = 0; i < padding; i++){
+		for (int i = 0; i < padding; i++) {
 			result += "0";
 		}
 		result += s;
@@ -35,13 +37,14 @@ public class lab1 {
 	}
 }
 
-class Counter{
+class Counter {
 	int value = 1;
-	
-	public void increase(){
+
+	public void increase() {
 		value++;
 	}
-	public	int get(){
+
+	public int get() {
 		return value;
 	}
 }
