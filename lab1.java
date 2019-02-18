@@ -12,14 +12,14 @@ public class lab1 {
 			String current = "";
 			current += s.charAt(i);
 			String binary = Integer.toBinaryString((int)current.charAt(0));
-			printBin += pad(binary + " ");
+			printBin += pad(binary) + " ";
 			if(letterMap.containsKey(binary)){
 				letterMap.get(binary).increase();
 			} else {
 				letterMap.put(binary, new Counter());
 			}
 		}
-		System.out.println(printBin);
+		System.out.println(printBin.trim());
 		letterMap.forEach((key,value) -> System.out.println("'" + (char)Integer.parseInt(key, 2) + "'" + " appeared " + value.get() + " times"));
 	}
 	
