@@ -1,5 +1,6 @@
 import java.util.*;
 
+
 public class lab1 {
 
 	public static void main(String[] args) {
@@ -17,10 +18,11 @@ public class lab1 {
 				letterMap.get(binary).increase();
 			} else {
 				letterMap.put(binary, new Counter());
-			}
+				 }
 		}
 		System.out.println(printBin.trim());
-		letterMap.forEach((key,value) -> System.out.println("'" + (char)Integer.parseInt(key, 2) + "'" + " appeared " + value.get() + " times"));
+		letterMap.forEach((key,value) -> 
+		System.out.println(value.get()==1?("'" + (char)Integer.parseInt(key, 2) + "'" + " appeared " + value.get() + " time") : "'" + (char)Integer.parseInt(key, 2) + "'" + " appeared " + value.get() + " times"));
 	}
 	
 	public static String pad(String s){
