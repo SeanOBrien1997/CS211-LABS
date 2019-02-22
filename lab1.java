@@ -9,9 +9,7 @@ public class lab1 {
 		String s = sc.nextLine();
 		String printBin = "";
 		for (int i = 0; i < s.length(); i++) {
-			String current = "";
-			current += s.charAt(i);
-			String binary = Integer.toBinaryString((int) current.charAt(0));
+			String binary = Integer.toBinaryString((int) s.charAt(i));
 			printBin += pad(binary) + " ";
 			if (letterMap.containsKey(binary)) {
 				letterMap.get(binary).increase();
