@@ -26,8 +26,10 @@ public class Huffdaddy {
 				// add the Tree into the PQ
 				Tree t = new Tree(); // new tree
 				t.frequency = array[i]; // cumulative freq.
-				t.root = new Node(); // letter as root node
-				t.root.letter=(char)i;
+				Node n = new Node();  // insert letter as root node 
+				n.smallestLetter= (char)i;
+				t.root = n; 
+				t.root.letter = (char) i;
 				PQ.add(t); // add to pq
 			}
 		}
@@ -57,6 +59,7 @@ public class Huffdaddy {
 			// insert those trees
 			t.root.leftChild = first.root;
 			t.root.rightChild = second.root;
+			t.root.smallestLetter = (char) Math.min(first.root.smallestLetter, second.root.smallestLetter); // check smallest letter
 			
 			PQ.add(t); // add this to pq and repeat
 		}
