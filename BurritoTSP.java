@@ -1,7 +1,7 @@
 import java.util.*;
 import java.io.*;
 
-public class Solution {
+public class BurritoTSP {
 
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
