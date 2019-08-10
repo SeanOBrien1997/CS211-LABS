@@ -1,0 +1,161 @@
+import java.util.*;
+import java.io.*;
+
+public class BurritoTSP {
+
+	public static void main(String[] args) throws IOException {
+		// TODO Auto-generated method stub
+		List<String> raw = readTextFile("A:\\Homework\\burritotsp.txt");
+		List<Location> locations = getLocations(raw);
+		Location theShop = new Location("n/a","Burrito Bear","N/A","53.38195","-6.59192");
+		List<Location> ordered = new ArrayList<Location>();
+		Location start = theShop;
+		for(int i = 0 ; i < 100; i++) {
+			Location save = findclosestunvisited(start,locations,ordered);
+			ordered.add(save);
+			start = save;
+		}
+		for(Location l:ordered) {
+			System.out.print(l.orderNum + ",");
+		}
+		
+	}
+	
+	public static Location findclosestunvisited(Location current,List<Location> locations,List<Location> visited) {
+		double distanceTo = Double.MAX_VALUE;
+		Location temp = null;
+		for(Location l: locations) {
+			if(distancefrompoint(current,l) < distanceTo && !visited.contains(l)) {
+				temp = l;
+				distanceTo = distancefrompoint(current,l);
+			}
+		}
+		return temp;
+	}
+
+	public static List<String> readTextFile(String path) throws IOException{	
+    	List<String> list = new ArrayList<String>();
+    	File file = new File(path);
+    	BufferedReader br = new BufferedReader(new FileReader(file));
+    	String s;
+    	while((s = br.readLine()) != null) {
+    		list.add(s);			
+    	}	
+     	br.close();		
+    	return list;	
+     }
+	
+	public static Double toRad(Double value) {
+	    return value * Math.PI / 180;
+	}
+	
+	public static double distancefrompoint(Location l1,Location l2) {
+		return getDistance(l1.N,l1.W,l2.N,l2.W);
+	}
+	
+    public static double getDistance(String lt1, String ln1, String lt2, String ln2){
+        final int R = 6371; // Radious of the earth
+        Double lat1 = Double.parseDouble(lt1);
+        Double lon1 = Double.parseDouble(ln1);
+        Double lat2 = Double.parseDouble(lt2);
+        Double lon2 = Double.parseDouble(ln2);
+        Double latDistance = toRad(lat2-lat1);
+        Double lonDistance = toRad(lon2-lon1);
+        Double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2) + 
+        Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * 
+        Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
+        Double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        Double distance = R * c;
+        return distance*1000;
+    }
+	
+	public static List<Location> getLocations(List<String> raw){
+		List<Location> locations = new ArrayList<Location>();
+		for(String data:raw) {
+			String[] datasplit = data.split(",");
+			locations.add(new Location(datasplit[0],datasplit[1],datasplit[2],datasplit[3],datasplit[4]));
+		}
+		return locations;
+	}
+
+}
+
+class minuteswaitingComparator implements Comparator<Location>{
+	@Override
+	public int compare(Location l1,Location l2) {
+		double time1 = Double.parseDouble(l1.time);
+		double time2 = Double.parseDouble(l2.time);
+		if(time1<time2) {
+			return -1;
+		} else if ( time2 < time1) {
+			return 1;
+		} else {
+			return 0;
+		}
+	}
+}
+
+class distancefromShopComparator implements Comparator<Location>{
+	@Override
+	public int compare(Location l1,Location l2) {
+		if(distancefromshop(l1)<distancefromshop(l2)) {
+			return -1;
+		} else if (distancefromshop(l2)<distancefromshop(l1)) {
+			return 1;
+		} else {
+			return 0;
+		}
+	}
+	
+	
+	public double distancefromshop(Location l) {
+		Location theShop = new Location("n/a","Burrito Bear","N/A","53.38195","-6.59192");
+		return distancefrompoint(theShop,l);
+	}
+	
+	public static Double toRad(Double value) {
+	    return value * Math.PI / 180;
+	}
+	
+	public static double distancefrompoint(Location l1,Location l2) {
+		return getDistance(l1.N,l1.W,l2.N,l2.W);
+	}
+	
+    public static double getDistance(String lt1, String ln1, String lt2, String ln2){
+        final int R = 6371; // Radious of the earth
+        Double lat1 = Double.parseDouble(lt1);
+        Double lon1 = Double.parseDouble(ln1);
+        Double lat2 = Double.parseDouble(lt2);
+        Double lon2 = Double.parseDouble(ln2);
+        Double latDistance = toRad(lat2-lat1);
+        Double lonDistance = toRad(lon2-lon1);
+        Double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2) + 
+        Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * 
+        Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
+        Double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        Double distance = R * c;
+        return distance*1000;
+    }
+}
+
+class Location{
+	public String orderNum;
+	public String address;
+	public String time;
+	public String N;
+	public String W;
+	public boolean visited;
+	
+	public Location(String orderNum,String address,String time,String N,String W) {
+		this.orderNum = orderNum;
+		this.address = address;
+		this.time = time;
+		this.N = N;
+		this.W = W;
+		this.visited = false;
+	}
+	@Override
+	public String toString() {
+		return orderNum + " " + address + " " + time + " " + N + " " + W + " " + visited;
+	}
+}
